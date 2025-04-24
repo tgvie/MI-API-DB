@@ -1,0 +1,32 @@
+{
+  "name": "mi-sql-db",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tsx watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc --build",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgvie/MI-SQL-DB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tgvie/MI-SQL-DB/issues"
+  },
+  "homepage": "https://github.com/tgvie/MI-SQL-DB#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
