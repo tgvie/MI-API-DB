@@ -9,6 +9,15 @@ router.get('/', async (req, res) => {
     res.json(rows);
 });
 
+// GET products that belong to a category
+router.get('/:id/products', async (req, res) => {
+    const [rows] = await db.query(
+        'SELECT * FROM product WHERE category_id = ?',
+        [req.params.id]
+    );
+    res.json(rows);
+});
+
 // Create a new category
 router.post('/', async (req, res) => {
     const { id, title } = req.body;
