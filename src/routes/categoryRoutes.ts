@@ -19,7 +19,7 @@ router.get('/:id/products', async (req, res) => {
 });
 
 // Create a new category
-router.post('/', async (req, res) => {
+router.post('/', (async (req, res) => {
     const { id, title } = req.body;
 
     // Validate
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
     
     await db.query('INSERT INTO category (id, title) VALUES (?, ?)', [id, title]);
     res.status(201).json({ message: 'Category created' });
-});
+}) as RequestHandler);
 
 // Update a category
 router.patch('/:id', (async (req, res) => {
