@@ -6,7 +6,30 @@ const router = Router();
 // GET all products
 router.get('/', (async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM product');
+        const { search, sort } = req.query;
+        let query = 'SELECT * FROM product';
+        const queryParams: any[] = [];
+
+        if (search) {
+            query += ' WHERE name LIKE ?';
+            queryParams.push(`%${search}%`);
+        }
+
+        if (sort === 'asc') {
+            query += ' ORDER BY price ASC';
+        } else if (sort === 'desc') {
+            query += ' ORDER BY price DESC';
+        }
+
+        const [rows] = await db.query(query, queryParams);
+
+        // No products found
+        if ((rows as any[]).length === 0) {
+            const error = new Error('No products found');
+            (error as any).status = 404;
+            return next(error);
+        }
+        
         res.json(rows);
     } catch (error) {
         next(error);
