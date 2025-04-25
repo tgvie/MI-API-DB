@@ -4,18 +4,17 @@ import { db } from '../db'; // Import db connection
 const router = Router();
 
 // GET all categories
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const [rows] = await db.query('SELECT * FROM category');
-    res.json(rows);
+        res.json(rows);
     } catch (error) {
-        console.error('Error fetching categories:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        next(error);
     }
 });
 
 // GET products that belong to a category
-router.get('/:id/products', async (req, res) => {
+router.get('/:id/products', async (req, res, next) => {
     try {
         const [rows] = await db.query(
         `SELECT p.* FROM product p
@@ -25,13 +24,12 @@ router.get('/:id/products', async (req, res) => {
         );
         res.json(rows); 
     } catch (error) {
-        console.error('Error fetching products for category:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        next(error);
     }    
 });
 
 // Create a new category
-router.post('/', (async (req, res) => {
+router.post('/', (async (req, res, next) => {
     try {
         const { id, title } = req.body;
 
@@ -43,13 +41,12 @@ router.post('/', (async (req, res) => {
         await db.query('INSERT INTO category (id, title) VALUES (?, ?)', [id, title]);
         res.status(201).json({ message: 'Category created' });
         } catch (error) {
-            console.error('Error creating new category:', error);
-            res.status(500).json({ message: 'Internal server error' });
+            next(error);
         }
 }) as RequestHandler);
 
 // Update a category
-router.patch('/:id', (async (req, res) => {
+router.patch('/:id', (async (req, res, next) => {
     try {
         const { title } = req.body;
 
@@ -61,19 +58,17 @@ router.patch('/:id', (async (req, res) => {
         await db.query('UPDATE category SET title = ? WHERE id = ?', [title, req.params.id]);
         res.json({ message: 'Category updated' });
     } catch (error) {
-        console.error('Error updating category:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        next(error);
     }
 }) as RequestHandler);
 
 // Delete a category
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         await db.query('DELETE FROM category WHERE id = ?', [req.params.id]);
         res.json({ message: 'Category deleted' });
     } catch (error) {
-        console.error('Error deleting category:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        next(error);
     }
 });
 
