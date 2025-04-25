@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, RequestHandler } from 'express';
 import { db } from '../db'; // Import db connection
 
 const router = Router();
@@ -21,16 +21,28 @@ router.get('/:id/products', async (req, res) => {
 // Create a new category
 router.post('/', async (req, res) => {
     const { id, title } = req.body;
+
+    // Validate
+    if (!title) {
+        return res.status(400).json({ message: 'Missing title' });
+    }
+    
     await db.query('INSERT INTO category (id, title) VALUES (?, ?)', [id, title]);
     res.status(201).json({ message: 'Category created' });
 });
 
 // Update a category
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', (async (req, res) => {
     const { title } = req.body;
+
+    // Validate
+    if (!title) {
+        return res.status(400).json({ message: 'Missing title' });
+    }
+
     await db.query('UPDATE category SET title = ? WHERE id = ?', [title, req.params.id]);
     res.json({ message: 'Category updated' });
-});
+}) as RequestHandler);
 
 // Delete a category
 router.delete('/:id', async (req, res) => {
