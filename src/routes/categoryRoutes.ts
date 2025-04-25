@@ -12,7 +12,9 @@ router.get('/', async (req, res) => {
 // GET products that belong to a category
 router.get('/:id/products', async (req, res) => {
     const [rows] = await db.query(
-        'SELECT * FROM product WHERE category_id = ?',
+        `SELECT p.* FROM product p
+        JOIN product_categories pc ON p.id = pc.product_id
+        WHERE pc.category_id = ?`,
         [req.params.id]
     );
     res.json(rows);
