@@ -1,5 +1,5 @@
 # 🗃️ LevelUp - Product Catalog API
-Built a normalized database and RESTful API for the LevelUp e-shop, managing products and categories with full CRUD, multi-category support, search and sort by title and price, field validation, and comprehensive error handling.
+This project is a normalized database and RESTful API for the LevelUp e-shop, managing products and categories with full CRUD, multi-category support, search and sort by title and price, field validation, and comprehensive error handling.
 
 <details>
 <summary><strong>🧾 Assigment Requirements</strong></summary>
