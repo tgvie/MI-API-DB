@@ -65,7 +65,9 @@ npm install
 - 4️⃣ Configure the database connection inside `src/db.ts`
 - 5️⃣ Start the dev server with: `npm run dev`
 </details>
-  
+
+<div align="right">
+
 ## ✍️ Author/s
 🧑‍💻 [@tgvie](https://github.com/tgvie)
 
